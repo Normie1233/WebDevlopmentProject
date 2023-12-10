@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<title>Welcome</title>
+<body style="background: url('https://proex.co.in/wp-content/uploads/2020/06/Use-of-Social-Media-as-Awareness-1024x576.jpg')">
+
+
+<h2>Enter your username and password to continue</h2>
+<p>If you are new user, please sign up instead.</p>
+<label for="txtUsername">Username</label> &emsp;
+<input type="text" id="txtUsername" name="txtUsername" required>
+<br />
+<br />
+<label for="txtPassword">Password</label> &emsp;
+<input type="password" id="txtPassword" name="txtUsername" required>
+<br />
+<br />
+<button type="button" onclick="login()">
+    Log In
+</button>
+&emsp;
+<button onclick="handleSignUp()">
+    Sign Up
+</button>
+</body>
+<script>
+  async function login() {
+        const username = document.getElementById('txtUsername').value;
+        const password = document.getElementById('txtPassword').value;
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (response.ok) {
+                // Successful login, redirect or perform other actions
+                alert('Login successful!');
+                document.getElementById('txtUsername').value = "";
+                  document.getElementById('txtPassword').value = "";
+                window.location.href = '/submitSurvey';
+            } else {
+                // Handle failed login
+                alert('Login failed. Please check your credentials.');
+                document.getElementById('txtUsername').value = "";
+                  document.getElementById('txtPassword').value = "";
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    }
+</script>
+<script>
+    async function handleSignUp() {
+          const username = document.getElementById('txtUsername').value;
+          const password = document.getElementById('txtPassword').value;
+  
+          try {
+              const response = await fetch('/signup', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ username, password }),
+              });
+  
+              if (response.ok) {
+                  // Successful login, redirect or perform other actions
+                  alert('Signup successful! Please enter username and password to login');
+                  document.getElementById('txtUsername').value = "";
+                  document.getElementById('txtPassword').value = "";
+              } else {
+                  // Handle failed login
+                  alert('There was an error during signup process');
+                  document.getElementById('txtUsername').value = "";
+                  document.getElementById('txtPassword').value = "";
+              }
+          } catch (error) {
+              console.error('Error during signup:', error);
+          }
+      }
+  </script>
+</html>

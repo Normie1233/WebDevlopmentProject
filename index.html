@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Usage Survey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+     <div class="container">
+        <h1>Social Media Usage Survey</h1>
+       
+            <label for="age">1. Age:</label>
+            &emsp;
+            <input type="number" id="age" name="age" required><br />
+            <br />
+            <label for="favoritePlatform">2. Favorite Social Media Platform:</label>
+            &emsp;
+            <input type="text" id="favoritePlatform" name="favoritePlatform" required><br />
+            <br />
+            <label for="usageHours">3. Average Daily Usage Hours:</label>
+            &emsp;
+            <input type="number" id="usageHours" name="usageHours" required><br />
+            <br />
+            <label for="impact">4. How does social media impact your daily life?</label>
+            &emsp;
+            <textarea id="impact" name="impact" rows="2" required></textarea><br />
+            <br />
+            <label for="privacyConcerns">5. Do you have privacy concerns on social media?</label>
+            &emsp;
+            <select id="privacyConcerns" name="privacyConcerns" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br />
+            <br />
+            <label for="improvements">6. What improvements would you like to see in social media platforms?</label>
+            &emsp;
+            <textarea id="improvements" name="improvements" rows="2" required></textarea><br />
+            <br />
+            <br />
+            <button onclick="handleSubmitSurvey()">Submit Survey</button>
+      
+    </div>
+
+    <script>
+async function handleSubmitSurvey() {
+    const age = document.getElementById('age').value;
+    const favoritePlatform = document.getElementById('favoritePlatform').value;
+    const usageHours = document.getElementById('usageHours').value;
+    const impact = document.getElementById('impact').value;
+    const privacyConcerns = document.getElementById('privacyConcerns').value;
+    const improvements = document.getElementById('improvements').value;
+console.log(favoritePlatform);
+    try {
+        const response = await fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                age, 
+                favoritePlatform, 
+                usageHours,
+                 impact, 
+                 privacyConcerns, 
+                 improvements
+            })
+        });
+        if (response.ok) {
+            alert('Submitted successfully.')
+            window.location.href = '/surveys';
+        } else {
+            alert("There wwas an error during submission process");
+        }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+    </script>
+</body>
+</html>
